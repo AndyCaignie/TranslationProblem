@@ -9,8 +9,15 @@ namespace Translations.ViewModels
     public class AboutViewModel : BaseViewModel
     {
         public ICommand AddToCounterCommand { get; }
-        static int Counter = 0;
-        public LocalizedString CounterText { get; } = new(() => string.Format(Translations.ButtonCounter, Counter));
+
+        int counter = 0;
+        int Counter 
+        {
+            get => counter;
+            set => SetProperty(ref counter, value, onChanged: () => OnPropertyChanged(nameof(CounterText)));
+        }
+
+        public LocalizedString CounterText { get; }
         string sUntranslatedText = "";
 
         public AboutViewModel()
@@ -19,6 +26,7 @@ namespace Translations.ViewModels
             OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://aka.ms/xamarin-quickstart"));
             AddToCounterCommand = new Command(ExecuteAddToCounterCommand);
             UntranslatedText = string.Format(Translations.ButtonCounter, Counter);
+            CounterText = new(() => string.Format(Translations.ButtonCounter, Counter));
         }
 
         public string UntranslatedText
