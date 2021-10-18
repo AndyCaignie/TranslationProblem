@@ -33,6 +33,7 @@ namespace Translations.ViewModels
         {
             Counter = Counter + 1;
             UntranslatedText = string.Format(Translations.ButtonCounter, Counter);
+            OnPropertyChanged(nameof(CounterText));
         }
     }
 }
